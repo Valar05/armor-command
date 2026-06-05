@@ -15,6 +15,27 @@
   const HOLD_MS = 150;
   const HOLD_MOVE = 10;
 
+  const sheet = new Image();
+  sheet.src = 'assets/mech/mecha_modular_sheet_alpha.png';
+  const sprites = {
+    mechFull: { rect: [72, 58, 394, 604], anchor: [197, 514] },
+    armRifle: { rect: [492, 178, 492, 162], anchor: [42, 80], muzzle: [466, 82] },
+    podLeft: { rect: [1032, 184, 192, 160], anchor: [82, 92] },
+    podRight: { rect: [1312, 184, 190, 160], anchor: [82, 92] },
+    drone: { rect: [512, 520, 228, 134], anchor: [96, 67], muzzle: [210, 67] },
+    playerMissile: { rect: [776, 568, 214, 96], anchor: [107, 48] },
+    bolt: { rect: [1020, 586, 300, 70], anchor: [150, 35] },
+    enemyMissile: { rect: [1372, 420, 90, 268], anchor: [45, 134] },
+    explosions: [
+      { rect: [88, 746, 148, 154], anchor: [74, 77] },
+      { rect: [276, 732, 184, 190], anchor: [92, 95] },
+      { rect: [538, 714, 238, 222], anchor: [119, 111] },
+      { rect: [858, 734, 238, 184], anchor: [119, 92] },
+      { rect: [1118, 740, 236, 160], anchor: [118, 80] },
+      { rect: [1374, 760, 154, 112], anchor: [77, 56] }
+    ]
+  };
+
   const state = {
     width: 0,
     height: 0,
@@ -589,6 +610,24 @@
     }
   }
 
+  function sheetReady() {
+    return sheet.complete && sheet.naturalWidth > 0;
+  }
+
+  function drawSpritePart(part, x, y, scale = 1, rotation = 0, alpha = 1) {
+    if (!sheetReady()) return false;
+    const [sx, sy, sw, sh] = part.rect;
+    const [ax, ay] = part.anchor;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.scale(scale, scale);
+    ctx.drawImage(sheet, sx, sy, sw, sh, -ax, -ay, sw, sh);
+    ctx.restore();
+    return true;
+  }
+
   function drawBase() {
     const y = state.height - 48;
     ctx.fillStyle = '#111821';
@@ -613,6 +652,14 @@
     const y = m.y;
 
     drawDrones();
+
+    if (sheetReady()) {
+      drawSpritePart(sprites.mechFull, x, y + 7 * s, 0.43 * s, 0);
+      drawSpritePart(sprites.podLeft, x - 58 * s, y - 58 * s, 0.34 * s, -0.06);
+      drawSpritePart(sprites.podRight, x + 58 * s, y - 58 * s, 0.34 * s, 0.06);
+      drawRifleArm();
+      return;
+    }
 
     ctx.save();
     ctx.translate(x, y);
@@ -679,6 +726,10 @@
     const s = m.scale;
     const shoulderX = m.x + 22 * s;
     const shoulderY = m.y - 42 * s;
+    if (sheetReady()) {
+      drawSpritePart(sprites.armRifle, shoulderX, shoulderY, 0.23 * s, state.armAngle);
+      return;
+    }
     ctx.save();
     ctx.translate(shoulderX, shoulderY);
     ctx.rotate(state.armAngle);
@@ -702,16 +753,18 @@
     const target = input.active ? { x: input.x, y: input.y } : nearestEnemyTarget();
     for (const d of dronePositions()) {
       const a = Math.atan2(target.y - d.y, target.x - d.x);
-      ctx.save();
-      ctx.translate(d.x, d.y);
-      ctx.rotate(a);
-      ctx.fillStyle = '#eff7ff';
-      roundRect(-15, -15, 30, 30, 7, true);
-      ctx.fillStyle = '#2a3c52';
-      roundRect(5, -5, 26, 10, 4, true);
-      ctx.fillStyle = '#ffdf67';
-      ctx.fillRect(26, -3, 8, 6);
-      ctx.restore();
+      if (!drawSpritePart(sprites.drone, d.x, d.y, 0.28 * mech().scale, a)) {
+        ctx.save();
+        ctx.translate(d.x, d.y);
+        ctx.rotate(a);
+        ctx.fillStyle = '#eff7ff';
+        roundRect(-15, -15, 30, 30, 7, true);
+        ctx.fillStyle = '#2a3c52';
+        roundRect(5, -5, 26, 10, 4, true);
+        ctx.fillStyle = '#ffdf67';
+        ctx.fillRect(26, -3, 8, 6);
+        ctx.restore();
+      }
       ctx.strokeStyle = 'rgba(142,244,255,.18)';
       ctx.beginPath();
       ctx.arc(d.x, d.y, 22, 0, TAU);
@@ -742,18 +795,20 @@
       ctx.lineTo(e.x, e.y);
       ctx.stroke();
       const a = Math.atan2(e.vy, e.vx);
-      ctx.save();
-      ctx.translate(e.x, e.y);
-      ctx.rotate(a + Math.PI / 2);
-      ctx.fillStyle = e.hot ? '#ff6b6b' : '#ffd966';
-      ctx.beginPath();
-      ctx.moveTo(0, -10);
-      ctx.lineTo(7, 8);
-      ctx.lineTo(0, 4);
-      ctx.lineTo(-7, 8);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
+      if (!drawSpritePart(sprites.enemyMissile, e.x, e.y, e.hot ? 0.16 : 0.13, a + Math.PI / 2)) {
+        ctx.save();
+        ctx.translate(e.x, e.y);
+        ctx.rotate(a + Math.PI / 2);
+        ctx.fillStyle = e.hot ? '#ff6b6b' : '#ffd966';
+        ctx.beginPath();
+        ctx.moveTo(0, -10);
+        ctx.lineTo(7, 8);
+        ctx.lineTo(0, 4);
+        ctx.lineTo(-7, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
     }
   }
 
@@ -770,35 +825,42 @@
       ctx.lineTo(missile.x, missile.y);
       ctx.stroke();
       const a = Math.atan2(missile.ty - missile.y, missile.tx - missile.x);
-      ctx.save();
-      ctx.translate(missile.x, missile.y);
-      ctx.rotate(a + Math.PI / 2);
-      ctx.fillStyle = '#e9f3ff';
-      ctx.beginPath();
-      ctx.moveTo(0, -12);
-      ctx.lineTo(8, 10);
-      ctx.lineTo(0, 5);
-      ctx.lineTo(-8, 10);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
+      if (!drawSpritePart(sprites.playerMissile, missile.x, missile.y, 0.18, a)) {
+        ctx.save();
+        ctx.translate(missile.x, missile.y);
+        ctx.rotate(a + Math.PI / 2);
+        ctx.fillStyle = '#e9f3ff';
+        ctx.beginPath();
+        ctx.moveTo(0, -12);
+        ctx.lineTo(8, 10);
+        ctx.lineTo(0, 5);
+        ctx.lineTo(-8, 10);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
     }
   }
 
   function drawBullets() {
     for (const b of bullets) {
-      ctx.strokeStyle = b.color;
-      ctx.lineWidth = b.radius;
-      ctx.beginPath();
-      ctx.moveTo(b.x, b.y);
-      ctx.lineTo(b.x - b.vx * 0.025, b.y - b.vy * 0.025);
-      ctx.stroke();
+      const a = Math.atan2(b.vy, b.vx);
+      if (!drawSpritePart(sprites.bolt, b.x, b.y, Math.max(0.08, b.radius * 0.022), a, 0.9)) {
+        ctx.strokeStyle = b.color;
+        ctx.lineWidth = b.radius;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x - b.vx * 0.025, b.y - b.vy * 0.025);
+        ctx.stroke();
+      }
     }
   }
 
   function drawExplosions() {
     for (const ex of explosions) {
       const t = clamp(ex.life / 0.42, 0, 1);
+      const frame = clamp(Math.floor((1 - t) * sprites.explosions.length), 0, sprites.explosions.length - 1);
+      drawSpritePart(sprites.explosions[frame], ex.x, ex.y, Math.max(0.28, ex.radius / 92), 0, 0.86 * t);
       ctx.strokeStyle = ex.team === 'player' ? `rgba(255, 223, 103, ${0.85 * t})` : `rgba(255, 91, 91, ${0.75 * t})`;
       ctx.lineWidth = 4;
       ctx.beginPath();

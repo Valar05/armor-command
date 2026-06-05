@@ -23,6 +23,38 @@
       "status": "ready_for_sprite_import",
       "source": "assets/mech/mecha_pivots.json",
       "target_use": "Defines draw anchors, shoulder pivots, pod mounts, and muzzle points for future modular mecha sprites."
+    },
+    {
+      "id": "mecha_modular_sheet_chromakey_v1",
+      "type": "generated_image",
+      "status": "source_chromakey",
+      "source": "Built-in image generation, copied from Codex generated_images on 2026-06-05",
+      "path": "assets/mech/mecha_modular_sheet_chromakey.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "target_use": "Modular heroic chibi anime mecha sprite sheet source with chroma-key background."
+    },
+    {
+      "id": "mecha_modular_sheet_alpha_v1",
+      "type": "generated_image_postprocessed",
+      "status": "runtime_asset",
+      "source": "Chroma-key removal from mecha_modular_sheet_chromakey_v1 using remove_chroma_key.py",
+      "path": "assets/mech/mecha_modular_sheet_alpha.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "target_use": "Runtime sprite sheet for mecha body, rifle arm, shoulder pods, drone, projectiles, and explosion rings."
+    },
+    {
+      "id": "mecha_modular_atlas_v1",
+      "type": "atlas_metadata",
+      "status": "runtime_asset",
+      "source": "Manual rough atlas for generated sprite sheet",
+      "path": "assets/mech/mecha_modular_atlas.json",
+      "target_use": "Defines source rectangles and anchors for the generated modular sprite sheet."
     }
   ]
 }

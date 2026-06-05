@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0",
+  "image": "mecha_modular_sheet_alpha.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "sprites": {
+    "mech_full": {
+      "rect": [
+        72,
+        58,
+        394,
+        604
+      ],
+      "anchor": [
+        197,
+        514
+      ]
+    },
+    "arm_rifle": {
+      "rect": [
+        492,
+        178,
+        492,
+        162
+      ],
+      "anchor": [
+        42,
+        80
+      ],
+      "muzzle": [
+        466,
+        82
+      ],
+      "source_pose": "points right"
+    },
+    "pod_left": {
+      "rect": [
+        1032,
+        184,
+        192,
+        160
+      ],
+      "anchor": [
+        82,
+        92
+      ]
+    },
+    "pod_right": {
+      "rect": [
+        1312,
+        184,
+        190,
+        160
+      ],
+      "anchor": [
+        82,
+        92
+      ]
+    },
+    "drone": {
+      "rect": [
+        512,
+        520,
+        228,
+        134
+      ],
+      "anchor": [
+        96,
+        67
+      ],
+      "muzzle": [
+        210,
+        67
+      ],
+      "source_pose": "points right"
+    },
+    "player_missile": {
+      "rect": [
+        776,
+        568,
+        214,
+        96
+      ],
+      "anchor": [
+        107,
+        48
+      ],
+      "source_pose": "points right"
+    },
+    "bolt": {
+      "rect": [
+        1020,
+        586,
+        300,
+        70
+      ],
+      "anchor": [
+        150,
+        35
+      ],
+      "source_pose": "points right"
+    },
+    "enemy_missile": {
+      "rect": [
+        1372,
+        420,
+        90,
+        268
+      ],
+      "anchor": [
+        45,
+        134
+      ],
+      "source_pose": "points up"
+    },
+    "explosion_0": {
+      "rect": [
+        88,
+        746,
+        148,
+        154
+      ],
+      "anchor": [
+        74,
+        77
+      ]
+    },
+    "explosion_1": {
+      "rect": [
+        276,
+        732,
+        184,
+        190
+      ],
+      "anchor": [
+        92,
+        95
+      ]
+    },
+    "explosion_2": {
+      "rect": [
+        538,
+        714,
+        238,
+        222
+      ],
+      "anchor": [
+        119,
+        111
+      ]
+    },
+    "explosion_3": {
+      "rect": [
+        858,
+        734,
+        238,
+        184
+      ],
+      "anchor": [
+        119,
+        92
+      ]
+    },
+    "explosion_4": {
+      "rect": [
+        1118,
+        740,
+        236,
+        160
+      ],
+      "anchor": [
+        118,
+        80
+      ]
+    },
+    "explosion_5": {
+      "rect": [
+        1374,
+        760,
+        154,
+        112
+      ],
+      "anchor": [
+        77,
+        56
+      ]
+    }
+  }
+}
