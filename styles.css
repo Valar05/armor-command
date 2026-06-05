@@ -1,0 +1,70 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #071016;
+  color: #f3f7ff;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; overflow: hidden; touch-action: none; background: #071016; }
+body { position: fixed; inset: 0; width: 100%; height: 100%; }
+canvas { display: block; width: 100vw; height: 100vh; background: #071016; touch-action: none; }
+button { font: inherit; }
+
+.hud {
+  position: fixed;
+  inset: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) auto max(10px, env(safe-area-inset-left));
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 3;
+}
+.hud__cluster { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.hud__cluster--right { pointer-events: auto; }
+.hud__pill, .icon-btn {
+  min-height: 38px;
+  border: 1px solid rgba(158, 220, 255, .35);
+  border-radius: 8px;
+  background: rgba(5, 13, 20, .72);
+  color: #dff4ff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(8px);
+}
+.hud__pill { padding: 9px 10px; font-size: 12px; font-weight: 800; letter-spacing: 0; }
+.icon-btn { width: 42px; padding: 0; font-weight: 900; cursor: pointer; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  z-index: 4;
+  background: radial-gradient(circle at 50% 80%, rgba(29, 87, 112, .34), transparent 42%), rgba(4, 9, 15, .62);
+}
+.overlay.is-hidden { display: none; }
+.overlay__panel {
+  width: min(430px, 100%);
+  border: 1px solid rgba(157, 228, 255, .36);
+  border-radius: 8px;
+  background: rgba(6, 15, 23, .86);
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .44);
+}
+.overlay h1 { margin: 0 0 8px; font-size: clamp(34px, 10vw, 56px); line-height: .92; letter-spacing: 0; }
+.overlay p { margin: 0 0 18px; color: #b7cad8; }
+.overlay button {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 8px;
+  background: #ffdf67;
+  color: #15120a;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@media (min-width: 780px) {
+  .hud__pill { font-size: 13px; padding-inline: 13px; }
+}

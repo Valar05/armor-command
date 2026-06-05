@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#071016">
+  <title>Mecha Command</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas id="game" aria-label="Mecha Command game canvas"></canvas>
+  <div id="hud" class="hud" aria-hidden="true">
+    <div class="hud__cluster">
+      <div id="wave" class="hud__pill">WAVE 1</div>
+      <div id="integrity" class="hud__pill">BASE 100%</div>
+    </div>
+    <div class="hud__cluster hud__cluster--right">
+      <button id="pauseBtn" class="icon-btn" type="button" aria-label="Pause">II</button>
+      <button id="fullscreenBtn" class="icon-btn" type="button" aria-label="Fullscreen">[]</button>
+    </div>
+  </div>
+  <div id="overlay" class="overlay">
+    <div class="overlay__panel">
+      <h1>MECHA COMMAND</h1>
+      <p>Tap intercepts. Hold opens fire.</p>
+      <button id="startBtn" type="button">Start</button>
+    </div>
+  </div>
+  <script src="src/main.js"></script>
+</body>
+</html>
