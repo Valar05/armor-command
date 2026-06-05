@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "coordinate_space": "source_sprite_pixels",
+  "notes": "Pivot plan for future modular image-generated sprites. Runtime procedural art uses equivalent anchors until sprites are available.",
+  "sprites": {
+    "torso_front": {
+      "expected_size": [256, 256],
+      "draw_anchor": [128, 166],
+      "shoulder_right": [158, 106],
+      "shoulder_left": [98, 106],
+      "pod_right": [184, 92],
+      "pod_left": [72, 92]
+    },
+    "legs_planted": {
+      "expected_size": [256, 192],
+      "draw_anchor": [128, 110]
+    },
+    "arm_rifle_right": {
+      "expected_size": [180, 72],
+      "shoulder_anchor": [12, 36],
+      "muzzle": [170, 36],
+      "source_pose": "points right"
+    },
+    "shoulder_pod_left": {
+      "expected_size": [96, 96],
+      "mount_anchor": [50, 58],
+      "muzzle_a": [36, 12],
+      "muzzle_b": [58, 12]
+    },
+    "shoulder_pod_right": {
+      "expected_size": [96, 96],
+      "mount_anchor": [46, 58],
+      "muzzle_a": [38, 12],
+      "muzzle_b": [60, 12]
+    },
+    "gun_drone": {
+      "expected_size": [64, 64],
+      "center_anchor": [32, 32],
+      "muzzle": [58, 32],
+      "source_pose": "barrel points right"
+    }
+  }
+}

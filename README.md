@@ -26,3 +26,11 @@ http://127.0.0.1:8791/
 node --check src/main.js
 python3 -m json.tool assets/asset_manifest.json >/dev/null
 ```
+
+## Build Web Zip
+
+```sh
+python tools/build_web_release.py
+```
+
+The generated zip lands at `release/mecha-command-web.zip`.

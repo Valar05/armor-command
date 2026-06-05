@@ -16,6 +16,13 @@
       "source": "Thunder Brainstorm design packet and imagegen attempt on 2026-06-04",
       "target_use": "Future modular sprite sheet: torso, legs, arm+rifle, shoulder pods, drones, missiles, tracers, explosions, enemy missiles.",
       "prompt_summary": "Heroic chibi sleek anime mecha modular game asset reference sheet on flat chroma background with separated parts and no labels."
+    },
+    {
+      "id": "mecha_modular_pivot_plan_v1",
+      "type": "pivot_metadata",
+      "status": "ready_for_sprite_import",
+      "source": "assets/mech/mecha_pivots.json",
+      "target_use": "Defines draw anchors, shoulder pivots, pod mounts, and muzzle points for future modular mecha sprites."
     }
   ]
 }

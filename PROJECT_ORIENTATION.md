@@ -8,6 +8,8 @@ Mecha Command is a standalone HTML5/canvas mobile prototype using the Marrow Run
 - `styles.css`: fullscreen/mobile layout.
 - `src/main.js`: game loop, touch input, rendering, weapons, enemies, waves, and procedural art.
 - `assets/asset_manifest.json`: generated/procedural asset notes and future image-gen prompts.
+- `assets/mech/mecha_pivots.json`: pivot/anchor plan for future modular sprites.
+- `tools/build_web_release.py`: packages a simple web zip.
 - `harness.html`: simple responsive canvas smoke page.
 
 ## Run Locally
@@ -33,8 +35,9 @@ python3 -m json.tool assets/asset_manifest.json >/dev/null
 - Descending enemy missiles.
 - Explosion-radius interception.
 - Wave escalation and lightweight survivorlike upgrade offers.
+- Shotgun and heavy-pistol upgrades layered onto hold-fire.
 - Procedural heroic chibi mecha art with runtime arm and drone barrel tracking.
 
 ## Asset Plan
 
-The first version uses procedural canvas art. Image generation should produce modular sprites rather than every aiming pose: torso, legs, arm+rife, shoulder pods, drones, missiles, bolts, explosions. Runtime rotates arm/drone assets around pivot anchors.
+The first version uses procedural canvas art. Image generation should produce modular sprites rather than every aiming pose: torso, legs, arm+rifle, shoulder pods, drones, missiles, bolts, explosions. Runtime rotates arm/drone assets around pivot anchors.

@@ -9,6 +9,7 @@
   const fullscreenBtn = document.getElementById('fullscreenBtn');
   const waveEl = document.getElementById('wave');
   const integrityEl = document.getElementById('integrity');
+  const scoreEl = document.getElementById('score');
 
   const TAU = Math.PI * 2;
   const HOLD_MS = 150;
@@ -44,6 +45,12 @@
       droneCooldown: 0.16,
       droneTimer: 0,
       droneCount: 4,
+      shotgunEnabled: false,
+      shotgunCooldown: 0.62,
+      shotgunTimer: 0,
+      heavyShotEnabled: false,
+      heavyShotEvery: 6,
+      rifleShots: 0,
       baseRepair: 0
     }
   };
@@ -92,6 +99,16 @@
       title: 'Bulwark Plating',
       apply: () => { state.base = Math.min(100, state.base + 18); },
       note: 'Patch the defended line.'
+    },
+    {
+      title: 'Scatter Knuckle',
+      apply: () => { state.stats.shotgunEnabled = true; state.stats.shotgunCooldown = Math.max(0.42, state.stats.shotgunCooldown * 0.9); },
+      note: 'Hold-fire periodically vents a short shotgun fan.'
+    },
+    {
+      title: 'Heavy Pistol Link',
+      apply: () => { state.stats.heavyShotEnabled = true; state.stats.heavyShotEvery = Math.max(3, state.stats.heavyShotEvery - 1); },
+      note: 'Every few rifle shots punches out a heavy round.'
     }
   ];
 
@@ -181,6 +198,12 @@
     state.stats.bulletSpeed = 920;
     state.stats.droneCooldown = 0.16;
     state.stats.droneTimer = 0;
+    state.stats.shotgunEnabled = false;
+    state.stats.shotgunCooldown = 0.62;
+    state.stats.shotgunTimer = 0;
+    state.stats.heavyShotEnabled = false;
+    state.stats.heavyShotEvery = 6;
+    state.stats.rifleShots = 0;
     clearArrays();
     startWave();
   }
@@ -250,16 +273,40 @@
     const baseAngle = Math.atan2(y - sy, x - sx);
     const jitter = (Math.random() - 0.5) * state.stats.rifleSpread;
     const a = baseAngle + jitter;
+    const heavy = source === 'mech' && state.stats.heavyShotEnabled && state.stats.rifleShots % state.stats.heavyShotEvery === 0;
     bullets.push({
       x: sx,
       y: sy,
-      vx: Math.cos(a) * state.stats.bulletSpeed,
-      vy: Math.sin(a) * state.stats.bulletSpeed,
-      life: 0.55,
-      radius: source === 'mech' ? 4 : 3,
-      color: source === 'mech' ? '#9be9ff' : '#ffec8a'
+      vx: Math.cos(a) * state.stats.bulletSpeed * (heavy ? 0.78 : 1),
+      vy: Math.sin(a) * state.stats.bulletSpeed * (heavy ? 0.78 : 1),
+      life: heavy ? 0.72 : 0.55,
+      radius: heavy ? 7 : (source === 'mech' ? 4 : 3),
+      damage: heavy ? 2 : 1,
+      color: heavy ? '#ffdf67' : (source === 'mech' ? '#9be9ff' : '#ffec8a')
     });
-    addSparks(sx, sy, '#9be9ff', 2, 70);
+    if (source === 'mech') state.stats.rifleShots += 1;
+    addSparks(sx, sy, heavy ? '#ffdf67' : '#9be9ff', heavy ? 5 : 2, heavy ? 120 : 70);
+  }
+
+  function fireShotgun(x, y) {
+    const m = mech();
+    const sx = m.x + 24 * m.scale;
+    const sy = m.y - 34 * m.scale;
+    const baseAngle = Math.atan2(y - sy, x - sx);
+    for (let i = -2; i <= 2; i += 1) {
+      const a = baseAngle + i * 0.13;
+      bullets.push({
+        x: sx,
+        y: sy,
+        vx: Math.cos(a) * state.stats.bulletSpeed * 0.58,
+        vy: Math.sin(a) * state.stats.bulletSpeed * 0.58,
+        life: 0.24,
+        radius: 5,
+        damage: 1,
+        color: '#ff9bd4'
+      });
+    }
+    addSparks(sx, sy, '#ff9bd4', 10, 150);
   }
 
   function dronePositions() {
@@ -292,6 +339,7 @@
       vy: Math.sin(a) * speed,
       radius: 8,
       alive: true,
+      hp: 1,
       hot: Math.random() < 0.16 + state.wave * 0.012
     });
   }
@@ -315,6 +363,7 @@
     state.stats.missileTimer = Math.max(0, state.stats.missileTimer - dt);
     state.stats.rifleTimer = Math.max(0, state.stats.rifleTimer - dt);
     state.stats.droneTimer = Math.max(0, state.stats.droneTimer - dt);
+    state.stats.shotgunTimer = Math.max(0, state.stats.shotgunTimer - dt);
     state.flash = Math.max(0, state.flash - dt * 2.4);
 
     if (input.active) {
@@ -334,6 +383,10 @@
       if (state.stats.rifleTimer <= 0) {
         fireRifle(input.x, input.y, 'mech');
         state.stats.rifleTimer = state.stats.rifleCooldown;
+        if (state.stats.shotgunEnabled && state.stats.shotgunTimer <= 0) {
+          fireShotgun(input.x, input.y);
+          state.stats.shotgunTimer = state.stats.shotgunCooldown;
+        }
       }
       if (state.stats.droneTimer <= 0) {
         const drones = dronePositions();
@@ -390,11 +443,16 @@
       for (const e of enemyMissiles) {
         if (!e.alive) continue;
         if (distSq(b.x, b.y, e.x, e.y) < (e.radius + b.radius) ** 2) {
-          e.alive = false;
+          e.hp -= b.damage || 1;
           b.life = 0;
-          state.score += 15;
-          state.scrap += 1;
-          addExplosion(e.x, e.y, 22, 'player');
+          if (e.hp <= 0) {
+            e.alive = false;
+            state.score += 15;
+            state.scrap += 1;
+            addExplosion(e.x, e.y, 22, 'player');
+          } else {
+            addSparks(e.x, e.y, '#ffdf67', 4, 90);
+          }
           break;
         }
       }
@@ -473,6 +531,7 @@
   function updateHud() {
     waveEl.textContent = `WAVE ${state.wave}`;
     integrityEl.textContent = `BASE ${Math.round(state.base)}%`;
+    scoreEl.textContent = `SCRAP ${state.scrap}`;
   }
 
   function draw() {
@@ -517,6 +576,12 @@
       ctx.stroke();
     }
     ctx.restore();
+
+    const danger = clamp((100 - state.base) / 100, 0, 1);
+    if (danger > 0) {
+      ctx.fillStyle = `rgba(255, 80, 80, ${0.05 + danger * 0.08})`;
+      ctx.fillRect(0, h - 58, w, 10);
+    }
 
     if (state.flash > 0) {
       ctx.fillStyle = `rgba(255, 65, 65, ${0.16 * state.flash})`;
@@ -772,6 +837,12 @@
     ctx.lineTo(0, -12);
     ctx.moveTo(0, 12);
     ctx.lineTo(0, 30);
+    ctx.stroke();
+    const cooldown = 1 - clamp(state.stats.missileTimer / state.stats.missileCooldown, 0, 1);
+    ctx.strokeStyle = 'rgba(255, 223, 103, .55)';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(0, 0, 28, -Math.PI / 2, -Math.PI / 2 + TAU * cooldown);
     ctx.stroke();
     ctx.restore();
   }
