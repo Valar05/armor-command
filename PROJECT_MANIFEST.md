@@ -1,9 +1,9 @@
 # Project Manifest: armor-command
 
-- Generated: 2026-06-20T17:00:50-05:00
+- Generated: 2026-06-20T17:47:30-05:00
 - Workspace path: `/storage/emulated/0/Documents/GodotProjects/armor-command`
 - Git repository: yes
-- Git remote: none configured
+- Git remote: `https://github.com/Valar05/armor-command`
 - Orientation: `PROJECT_ORIENTATION.md`
 - Agent instructions: `AGENTS.md`
 
@@ -21,6 +21,11 @@
 > - `harness.html`: simple responsive canvas smoke page.
 > ## Run Locally
 > ```sh
+> python -m http.server 8791
+> ```
+> Open `http://127.0.0.1:8791/`.
+> ## Validation
+> ```sh
 
 ## Entrypoints And Validation Clues
 - `harness.html`
@@ -35,6 +40,7 @@
 - `docs/`
 - `harness.html`
 - `index.html`
+- `PROJECT_MANIFEST.md`
 - `PROJECT_ORIENTATION.md`
 - `README.md`
 - `release/`
@@ -46,4 +52,3 @@
 - `.gitignore` contains a Codex workspace hygiene block for credentials, caches, and local build outputs.
 - `.gitattributes` contains a Codex Git LFS block for common binary assets, models, audio, video, archives, fonts, and PDFs.
 - `git lfs install --local` was attempted for this repository during the manifest pass.
-
