@@ -31,7 +31,11 @@ button { font: inherit; }
   backdrop-filter: blur(8px);
 }
 .hud__pill { padding: 9px 10px; font-size: 12px; font-weight: 800; letter-spacing: 0; }
+.hud__pill--combo { color: #ffdf67; opacity: .76; min-width: 82px; text-align: center; }
+.hud__pill--combo.is-hot { opacity: 1; border-color: rgba(255, 223, 103, .58); box-shadow: 0 0 22px rgba(255, 223, 103, .18), 0 10px 24px rgba(0, 0, 0, .28); }
 .icon-btn { width: 42px; padding: 0; font-weight: 900; cursor: pointer; }
+.icon-btn--menu { width: 58px; font-size: 12px; }
+.icon-btn--music { width: 52px; font-size: 12px; }
 
 .overlay {
   position: fixed;
@@ -52,6 +56,30 @@ button { font: inherit; }
   text-align: center;
   box-shadow: 0 24px 80px rgba(0, 0, 0, .44);
 }
+.overlay__panel--title {
+  width: min(520px, 100%);
+  padding: clamp(24px, 6vw, 38px);
+  background: linear-gradient(180deg, rgba(7, 18, 29, .9), rgba(4, 9, 15, .86));
+}
+.title-kicker {
+  margin-bottom: 12px;
+  color: #8fefff;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.title-logo {
+  color: #f3f7ff;
+  text-shadow: 0 3px 0 #18445f, 0 16px 34px rgba(111, 230, 255, .24);
+}
+.title-line {
+  color: #ffdf67;
+  font-weight: 800;
+}
+.title-best {
+  color: #b7cad8;
+  font-size: 13px;
+}
 .overlay h1 { margin: 0 0 8px; font-size: clamp(34px, 10vw, 56px); line-height: .92; letter-spacing: 0; }
 .overlay p { margin: 0 0 18px; color: #b7cad8; }
 .overlay button {
@@ -64,7 +92,21 @@ button { font: inherit; }
   font-weight: 900;
   cursor: pointer;
 }
+.overlay button + button {
+  margin-top: 10px;
+}
+.overlay button.secondary {
+  background: rgba(157, 228, 255, .14);
+  color: #dff4ff;
+  border: 1px solid rgba(157, 228, 255, .32);
+}
 
 @media (min-width: 780px) {
   .hud__pill { font-size: 13px; padding-inline: 13px; }
+}
+
+.overlay button.linkish {
+  background: rgba(255, 223, 103, .12);
+  color: #ffdf67;
+  border: 1px solid rgba(255, 223, 103, .38);
 }

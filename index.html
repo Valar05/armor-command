@@ -4,29 +4,31 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
   <meta name="theme-color" content="#071016">
-  <title>Mecha Command</title>
+  <title>Armor Command</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <canvas id="game" aria-label="Mecha Command game canvas"></canvas>
+  <canvas id="game" aria-label="Armor Command game canvas"></canvas>
   <div id="hud" class="hud" aria-hidden="true">
     <div class="hud__cluster">
       <div id="wave" class="hud__pill">WAVE 1</div>
       <div id="integrity" class="hud__pill">BASE 100%</div>
       <div id="score" class="hud__pill">SCRAP 0</div>
+      <div id="combo" class="hud__pill hud__pill--combo">CHAIN 0</div>
     </div>
     <div class="hud__cluster hud__cluster--right">
       <button id="pauseBtn" class="icon-btn" type="button" aria-label="Pause">II</button>
-      <button id="fullscreenBtn" class="icon-btn" type="button" aria-label="Fullscreen">[]</button>
+      <button id="menuBtn" class="icon-btn icon-btn--menu" type="button" aria-label="Open menu">MENU</button>
     </div>
   </div>
   <div id="overlay" class="overlay">
-    <div class="overlay__panel">
-      <h1>MECHA COMMAND</h1>
-      <p>Tap intercepts. Hold opens fire.</p>
-      <button id="startBtn" type="button">Start</button>
+    <div class="overlay__panel overlay__panel--title">
+      <div class="title-kicker">HTML5 prototype</div>
+      <h1 class="title-logo">ARMOR<br>COMMAND</h1>
+      <p class="title-line">Hold the line. Break the sky.</p>
+      <button id="startBtn" type="button">New Run</button>
     </div>
   </div>
-  <script src="src/main.js"></script>
+  <script src="src/main.js?v=1.1.10-2026-06-07"></script>
 </body>
 </html>

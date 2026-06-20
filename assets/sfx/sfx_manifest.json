@@ -1,0 +1,367 @@
+{
+  "schema_version": "1.0",
+  "project": "armor-command",
+  "created": "2026-06-05",
+  "purpose": "Generation and wiring manifest for Armor Command sound effects. Use this as the batch plan for generated/procedural/source SFX.",
+  "mix": {
+    "music_volume_runtime": 0.72,
+    "sfx_master_runtime": 0.45,
+    "one_shot_target_lufs": -16,
+    "loop_target_lufs": -20,
+    "latency_rule": "Trim leading silence aggressively; gameplay one-shots should begin audibly within 20 ms.",
+    "sfx_output_gain_runtime": 0.72
+  },
+  "runtime_notes": [
+    "Current enemy slain chime is procedural WebAudio in src/main.js and keyed to MUSIC_TRACK_KEYS.",
+    "Generated one-shots should use small random pitch variation at playback time where repeated rapidly.",
+    "Use preloaded pooled playback or decoded buffers when wiring file-based SFX.",
+    "v0.1.4 pass: manifest sounds are implemented as procedural WebAudio in src/main.js; prompts remain for future rendered asset replacement.",
+    "v0.1.5 pass: high-impact one-shots were rendered as deterministic WAV assets and are played through decoded WebAudio buffers with compressor bus, pitch variation, and procedural fallback.",
+    "v0.1.6 pass: SFX master was reduced from 1.35 to 1.02 after rendered WAVs tested about 25% too loud against music.",
+    "v0.1.6 pass: drop pod, trooper rocket, trooper shatter, and enemy rocket pop SFX were added as rendered WAV buffers.",
+    "v0.1.7 pass: SFX master was reduced from 1.02 to 0.71 after hosted playback still tested about 30% too loud.",
+    "v0.1.8 pass: added post-compressor output gain 0.72, lowered source SFX master to 0.45, and cache-busted src/main.js because hosted/mobile playback did not reflect the prior reduction clearly.",
+    "v1.0.0 pass: added persistent SFX toggle stored under armor-command.sfx-disabled.v1; disabled SFX mutes the WebAudio output bus and suppresses new one-shots.",
+    "v1.0.0 pass: removed the HUD music toggle; music and SFX toggles now live in title and pause menus."
+  ],
+  "batches": [
+    {
+      "id": "ui_core_batch_01",
+      "priority": 1,
+      "status": "implemented_rendered_buffer",
+      "description": "Short interface sounds for title, pause, upgrade, and menu actions.",
+      "items": [
+        {
+          "id": "ui_select_01",
+          "trigger": "button_select_or_new_run",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.08,
+          "prompt": "crisp futuristic armored console confirm chirp, bright but small, no reverb tail, immediate transient",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/ui_select_01.wav",
+          "rendered_path": "assets/sfx/ui_select_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "ui_pause_01",
+          "trigger": "pause_menu_open",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.12,
+          "prompt": "compact tactical pause toggle, low mechanical click plus soft digital blip, no voice",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/ui_pause_01.wav",
+          "rendered_path": "assets/sfx/ui_pause_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "ui_back_to_itch_01",
+          "trigger": "back_to_itch_page",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.16,
+          "prompt": "clean system exit sweep, short downward glassy tone, armored UI style, no long tail",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/ui_back_to_itch_01.wav",
+          "rendered_path": "assets/sfx/ui_back_to_itch_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "upgrade_select_01",
+          "trigger": "upgrade_chosen",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.22,
+          "prompt": "weapon hardpoint locks into place, satisfying servo clamp with bright confirmation chime",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/upgrade_select_01.wav",
+          "rendered_path": "assets/sfx/upgrade_select_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        }
+      ]
+    },
+    {
+      "id": "weapons_batch_01",
+      "priority": 1,
+      "status": "implemented_rendered_buffer",
+      "description": "Player weapon fire sounds. These will repeat often and need pitch variation.",
+      "items": [
+        {
+          "id": "missile_launch_01",
+          "trigger": "interceptor_missile_fired",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.2,
+          "variation": "random pitch +/- 35 cents, slight gain variation",
+          "prompt": "short interceptor missile tube thump and bright rocket ignition, side-view arcade, immediate attack, no long whoosh",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/missile_launch_01.wav",
+          "rendered_path": "assets/sfx/missile_launch_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "turret_bolt_01",
+          "trigger": "main_turret_bullet_fired",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.055,
+          "variation": "random pitch +/- 45 cents",
+          "prompt": "tiny rapid energy pistol shot, snappy armored turret crack, dry, no echo",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/turret_bolt_01.wav",
+          "rendered_path": "assets/sfx/turret_bolt_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "drone_bolt_01",
+          "trigger": "drone_bullet_fired",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.045,
+          "variation": "random pitch +/- 50 cents",
+          "prompt": "small slave drone laser tick, lighter than main turret, fast transient, no tail",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/drone_bolt_01.wav",
+          "rendered_path": "assets/sfx/drone_bolt_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "shotgun_burst_01",
+          "trigger": "scatter_barrel_fired",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.16,
+          "variation": "random pitch +/- 30 cents",
+          "prompt": "short futuristic scatter blast, multiple pellets, chunky but not bass heavy, immediate arcade punch",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/shotgun_burst_01.wav",
+          "rendered_path": "assets/sfx/shotgun_burst_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "heavy_pistol_01",
+          "trigger": "heavy_pistol_round_fired",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.12,
+          "variation": "random pitch +/- 25 cents",
+          "prompt": "heavier rail pistol crack, armored cannon snap, bright metallic transient, short decay",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/heavy_pistol_01.wav",
+          "rendered_path": "assets/sfx/heavy_pistol_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        }
+      ]
+    },
+    {
+      "id": "impact_kill_batch_01",
+      "priority": 1,
+      "status": "implemented_rendered_buffer",
+      "description": "Missile impacts, enemy deaths, base hits, and layered explosion sweeteners.",
+      "items": [
+        {
+          "id": "enemy_slay_chime_procedural_01",
+          "trigger": "enemy_missile_destroyed",
+          "kind": "procedural_web_audio",
+          "runtime_path": "src/main.js",
+          "status": "implemented_procedural",
+          "target_duration_seconds": 0.16,
+          "notes": "Ascending keyed chime; no rendered asset needed unless later replacing with sampled sounds.",
+          "implementation": "procedural_web_audio_keyed_chime"
+        },
+        {
+          "id": "enemy_pop_01",
+          "trigger": "enemy_missile_destroyed_layer",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.13,
+          "variation": "random pitch +/- 40 cents",
+          "prompt": "small incoming missile breaks apart, glass-metal pop with tiny debris sparkle, arcade readable, short",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/enemy_pop_01.wav",
+          "rendered_path": "assets/sfx/enemy_pop_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "player_missile_explosion_01",
+          "trigger": "interceptor_explosion_peak",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.34,
+          "variation": "random pitch +/- 20 cents",
+          "prompt": "clean interceptor airburst, compact bright explosion, not realistic long boom, teal sci-fi sparkle",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/player_missile_explosion_01.wav",
+          "rendered_path": "assets/sfx/player_missile_explosion_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "base_impact_01",
+          "trigger": "enemy_missile_hits_base",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.36,
+          "variation": "random pitch +/- 20 cents",
+          "prompt": "armored base impact, hard metal shock and warning thud, short red-alert hit, no voice",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/base_impact_01.wav",
+          "rendered_path": "assets/sfx/base_impact_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "base_breach_01",
+          "trigger": "game_over_base_destroyed",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.85,
+          "prompt": "dramatic armored line breach sting, low impact then falling digital alarm, short arcade game over",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/base_breach_01.wav",
+          "rendered_path": "assets/sfx/base_breach_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        }
+      ]
+    },
+    {
+      "id": "progression_alert_batch_01",
+      "priority": 2,
+      "status": "implemented_rendered_buffer",
+      "description": "Wave, danger, and run-state feedback.",
+      "items": [
+        {
+          "id": "wave_clear_01",
+          "trigger": "wave_completed_upgrade_screen",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.75,
+          "prompt": "heroic short wave clear sting, mecha arcade, rising brass-like synth and clean final hit, no voice",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/wave_clear_01.wav",
+          "rendered_path": "assets/sfx/wave_clear_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "wave_start_01",
+          "trigger": "new_wave_started",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.38,
+          "prompt": "incoming wave alert, restrained tactical scanner sweep, ready tone, no siren loop",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/wave_start_01.wav",
+          "rendered_path": "assets/sfx/wave_start_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "base_low_alarm_loop_01",
+          "trigger": "base_integrity_low",
+          "kind": "loop",
+          "target_duration_seconds": 1.2,
+          "prompt": "short seamless low integrity warning loop, muted red alert pulse, not annoying, no voice",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/base_low_alarm_loop_01.wav",
+          "rendered_path": "assets/sfx/base_low_alarm_loop_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "missile_ready_tick_01",
+          "trigger": "missile_rack_ready_optional",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.07,
+          "priority_note": "Optional; only use if cooldown feedback needs more readability.",
+          "prompt": "tiny reload-ready tick, mechanical latch, very subtle, short transient",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/missile_ready_tick_01.wav",
+          "rendered_path": "assets/sfx/missile_ready_tick_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        }
+      ]
+    },
+    {
+      "id": "drop_pod_enemy_batch_01",
+      "priority": 1,
+      "status": "implemented_rendered_buffer",
+      "description": "Drop pod enemy family SFX: pod shatter, paratrooper rocket launch, trooper shatter, and small rocket pop.",
+      "items": [
+        {
+          "id": "drop_pod_break_01",
+          "trigger": "drop_pod_destroyed_or_impacts_base",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.48,
+          "prompt": "armored drop pod shell cracking open, heavy metal shatter, vent hiss, short arcade impact",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/drop_pod_break_01.wav",
+          "rendered_path": "assets/sfx/drop_pod_break_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "trooper_rocket_launch_01",
+          "trigger": "robot_paratrooper_fires_rocket",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.2,
+          "prompt": "small shoulder rocket launch, compact ignition puff and mechanical tick, shorter than interceptor launch",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/trooper_rocket_launch_01.wav",
+          "rendered_path": "assets/sfx/trooper_rocket_launch_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "trooper_shatter_01",
+          "trigger": "robot_paratrooper_destroyed",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.38,
+          "prompt": "small robot armor shattering into falling parts, servo crackle, bright debris ticks",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/trooper_shatter_01.wav",
+          "rendered_path": "assets/sfx/trooper_shatter_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        },
+        {
+          "id": "enemy_rocket_pop_01",
+          "trigger": "small_enemy_rocket_destroyed",
+          "kind": "one_shot",
+          "target_duration_seconds": 0.12,
+          "prompt": "tiny rocket fuel pop, bright spark and quick metal tick, readable but lighter than missile death",
+          "status": "implemented_rendered_buffer",
+          "runtime_path": "src/main.js",
+          "implementation": "rendered_wav_web_audio_buffer",
+          "future_render_target_path": "assets/sfx/enemy_rocket_pop_01.wav",
+          "rendered_path": "assets/sfx/enemy_rocket_pop_01.wav",
+          "source_generator": "tools/render_sfx_assets.py"
+        }
+      ]
+    }
+  ],
+  "postprocess_defaults": {
+    "ffmpeg_helper": "/data/data/com.termux/files/home/.codex/skills/game-sfx-generation-pipeline/scripts/prepare_sfx.py",
+    "one_shot": "--trim-silence --target-lufs -16 --fade-in 0.002 --fade-out 0.025",
+    "loop": "--trim-silence --target-lufs -20 --fade-in 0.02 --fade-out 0.05"
+  },
+  "generator_script": "tools/render_sfx_assets.py"
+}

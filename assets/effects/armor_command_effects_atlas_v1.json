@@ -1,0 +1,159 @@
+{
+  "schema_version": "1.3",
+  "image": "armor_command_effects_sheet_alpha_v1.png",
+  "dimensions": [
+    1774,
+    887
+  ],
+  "animations": {
+    "explosion": [
+      {
+        "rect": [
+          44,
+          239,
+          154,
+          150
+        ],
+        "anchor": [
+          0.5,
+          0.62
+        ]
+      },
+      {
+        "rect": [
+          240,
+          143,
+          257,
+          262
+        ],
+        "anchor": [
+          0.5,
+          0.62
+        ]
+      },
+      {
+        "rect": [
+          500,
+          96,
+          382,
+          312
+        ],
+        "anchor": [
+          0.5,
+          0.63
+        ]
+      },
+      {
+        "rect": [
+          860,
+          99,
+          320,
+          309
+        ],
+        "anchor": [
+          0.5,
+          0.63
+        ]
+      },
+      {
+        "rect": [
+          1166,
+          130,
+          308,
+          276
+        ],
+        "anchor": [
+          0.5,
+          0.58
+        ]
+      },
+      {
+        "rect": [
+          1462,
+          168,
+          298,
+          232
+        ],
+        "anchor": [
+          0.5,
+          0.56
+        ]
+      }
+    ],
+    "radiation_cloud": [
+      {
+        "rect": [
+          48,
+          632,
+          132,
+          130
+        ],
+        "anchor": [
+          0.5,
+          0.55
+        ]
+      },
+      {
+        "rect": [
+          248,
+          532,
+          248,
+          248
+        ],
+        "anchor": [
+          0.5,
+          0.55
+        ]
+      },
+      {
+        "rect": [
+          520,
+          466,
+          343,
+          328
+        ],
+        "anchor": [
+          0.5,
+          0.55
+        ]
+      },
+      {
+        "rect": [
+          895,
+          452,
+          292,
+          346
+        ],
+        "anchor": [
+          0.5,
+          0.55
+        ]
+      },
+      {
+        "rect": [
+          1214,
+          494,
+          280,
+          292
+        ],
+        "anchor": [
+          0.5,
+          0.55
+        ]
+      },
+      {
+        "rect": [
+          1522,
+          538,
+          236,
+          238
+        ],
+        "anchor": [
+          0.5,
+          0.55
+        ]
+      }
+    ]
+  },
+  "notes": "v1.3 removes a separate right-edge neighbor component from radioactive frame 2 while restoring frame 3 to avoid clipping its main cloud body."
+}

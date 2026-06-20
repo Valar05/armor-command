@@ -1,4 +1,4 @@
-# Mecha Command Agent Notes
+# Armor Command Agent Notes
 
 Read `PROJECT_ORIENTATION.md` before editing. Keep this as a standalone web/canvas project, not inside Thunder Brainstorm.
 

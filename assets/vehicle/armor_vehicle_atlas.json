@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "image": "armor_vehicle_sheet_alpha.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "notes": "Initial hand atlas for the ChatGPT-generated side-view armor/tank sheet. Runtime uses uploaded sprites for hull, turret weapons, missiles, bolts, drones, and explosions; left-facing source sprites add PI to runtime travel/aim angles.",
+  "sprites": {
+    "hull": {
+      "rect": [
+        176,
+        128,
+        440,
+        182
+      ],
+      "anchor": [
+        220,
+        170
+      ]
+    },
+    "starter_gun": {
+      "rect": [
+        594,
+        152,
+        170,
+        96
+      ],
+      "anchor": [
+        132,
+        72
+      ],
+      "muzzle": [
+        16,
+        47
+      ],
+      "source_pose": "points left; runtime adds PI to aim angle"
+    },
+    "missile_battery": {
+      "rect": [
+        786,
+        144,
+        214,
+        108
+      ],
+      "anchor": [
+        190,
+        54
+      ],
+      "source_pose": "points left with mount/base on right; runtime uses base-side anchor and rotates -PI/2 so tubes face upward"
+    },
+    "heavy_gun": {
+      "rect": [
+        1038,
+        154,
+        184,
+        100
+      ],
+      "anchor": [
+        146,
+        76
+      ],
+      "muzzle": [
+        18,
+        48
+      ],
+      "source_pose": "points left; runtime adds PI to aim angle"
+    },
+    "shotgun": {
+      "rect": [
+        1244,
+        158,
+        184,
+        96
+      ],
+      "anchor": [
+        146,
+        74
+      ],
+      "muzzle": [
+        18,
+        46
+      ],
+      "source_pose": "points left; runtime adds PI to aim angle"
+    },
+    "drone": {
+      "rect": [
+        286,
+        404,
+        154,
+        96
+      ],
+      "anchor": [
+        78,
+        50
+      ],
+      "muzzle": [
+        134,
+        30
+      ]
+    },
+    "player_missile": {
+      "rect": [
+        492,
+        416,
+        160,
+        74
+      ],
+      "anchor": [
+        80,
+        37
+      ],
+      "source_pose": "points left; runtime adds PI to travel angle"
+    },
+    "bolt": {
+      "rect": [
+        680,
+        418,
+        152,
+        70
+      ],
+      "anchor": [
+        76,
+        35
+      ],
+      "source_pose": "treated as left-facing; runtime adds PI to travel angle"
+    },
+    "enemy_missile": {
+      "rect": [
+        838,
+        418,
+        168,
+        76
+      ],
+      "anchor": [
+        84,
+        38
+      ],
+      "source_pose": "points left; runtime adds PI to travel angle"
+    },
+    "explosions": [
+      {
+        "rect": [
+          236,
+          730,
+          176,
+          138
+        ],
+        "draw_mode": "fixed_center_square"
+      },
+      {
+        "rect": [
+          412,
+          730,
+          176,
+          138
+        ],
+        "draw_mode": "fixed_center_square"
+      },
+      {
+        "rect": [
+          588,
+          730,
+          176,
+          138
+        ],
+        "draw_mode": "fixed_center_square"
+      },
+      {
+        "rect": [
+          764,
+          730,
+          176,
+          138
+        ],
+        "draw_mode": "fixed_center_square"
+      },
+      {
+        "rect": [
+          940,
+          730,
+          176,
+          138
+        ],
+        "draw_mode": "fixed_center_square"
+      },
+      {
+        "rect": [
+          1116,
+          730,
+          176,
+          138
+        ],
+        "draw_mode": "fixed_center_square"
+      }
+    ]
+  },
+  "runtime_mounts": {
+    "turret_barrel": "procedural barrel at mechRifleMount; avoids drawing starter_gun over the baked hull turret",
+    "missile_battery_left": [
+      -92,
+      -88
+    ],
+    "missile_battery_right": [
+      104,
+      -74
+    ],
+    "turret_sprite": "uploaded turret sprite at mechRifleMount, using right/base-side anchors and +PI rotation",
+    "missile_timing": "default 2.0s per rack; quick release-tap grace ignores the last 0.5s of remaining cooldown"
+  }
+}

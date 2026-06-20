@@ -1,18 +1,18 @@
 {
   "schema_version": "1.0",
-  "project": "mecha-command",
+  "project": "armor-command",
   "assets": [
     {
-      "id": "procedural_mecha_mvp",
+      "id": "procedural_vehicle_mvp",
       "type": "procedural_canvas_art",
-      "status": "runtime_fallback",
+      "status": "runtime_asset",
       "source": "src/main.js",
-      "target_use": "Heroic chibi mecha, rifle arm, shoulder missiles, drones, projectiles, and explosions for the first playable MVP."
+      "target_use": "Side-view armor/tank platform with turret, missile hardpoints, optional drone bays, projectiles, and explosions."
     },
     {
       "id": "modular_mecha_imagegen_prompt_v1",
       "type": "image_generation_prompt",
-      "status": "pending_rate_limit_retry",
+      "status": "fulfilled_v1_runtime_tuning_needed",
       "source": "Thunder Brainstorm design packet and imagegen attempt on 2026-06-04",
       "target_use": "Future modular sprite sheet: torso, legs, arm+rifle, shoulder pods, drones, missiles, tracers, explosions, enemy missiles.",
       "prompt_summary": "Heroic chibi sleek anime mecha modular game asset reference sheet on flat chroma background with separated parts and no labels."
@@ -39,22 +39,325 @@
     {
       "id": "mecha_modular_sheet_alpha_v1",
       "type": "generated_image_postprocessed",
-      "status": "runtime_asset",
+      "status": "retained_projectile_explosion_source",
       "source": "Chroma-key removal from mecha_modular_sheet_chromakey_v1 using remove_chroma_key.py",
       "path": "assets/mech/mecha_modular_sheet_alpha.png",
       "dimensions": [
         1536,
         1024
       ],
-      "target_use": "Runtime sprite sheet for mecha body, rifle arm, shoulder pods, drone, projectiles, and explosion rings."
+      "target_use": "Legacy generated sheet. Runtime no longer uses the humanoid mech body, arm, pods, or drone sprites; projectile and explosion frames may still be used until replaced."
     },
     {
       "id": "mecha_modular_atlas_v1",
       "type": "atlas_metadata",
-      "status": "runtime_asset",
-      "source": "Manual rough atlas for generated sprite sheet",
+      "status": "legacy_runtime_partial",
+      "source": "Manual atlas for generated sprite sheet, revised on 2026-06-05 to crop upper torso and stabilize explosion centering",
       "path": "assets/mech/mecha_modular_atlas.json",
-      "target_use": "Defines source rectangles and anchors for the generated modular sprite sheet."
+      "target_use": "Legacy atlas retained for projectile/explosion frames and art-history reference."
+    },
+    {
+      "id": "mecha_modular_runtime_alignment_v1",
+      "type": "runtime_art_adjustment",
+      "status": "superseded_by_vehicle_runtime",
+      "source": "src/main.js and assets/mech/mecha_modular_atlas.json edits on 2026-06-05",
+      "target_use": "Uses upper-body mech crop, relocates shoulder pods, adds a small platform, and renders explosion frames centered to reduce sprite-sheet jitter."
+    },
+    {
+      "id": "procedural_vehicle_runtime_pivot_v1",
+      "type": "runtime_art_direction_change",
+      "status": "runtime_asset",
+      "source": "src/main.js edits on 2026-06-05 after screenshot review",
+      "target_use": "Replaces unsuitable full-body mecha presentation with a smaller side-view armor platform, ground/sky composition, hardpoint upgrade language, and zero starting drones."
+    },
+    {
+      "id": "vehicle_tank_sprite_sheet_prompt_v1",
+      "type": "image_generation_prompt",
+      "status": "fulfilled_external_chatgpt_image",
+      "source": "Prompt printed by Codex and run by user through ChatGPT on 2026-06-05",
+      "target_use": "Side-view vehicle sprite sheet: tank hull, rotating turret, missile batteries, shotgun/heavy pistol attachments, drone, missiles, bullets, enemy missile, centered explosion cells.",
+      "prompt_summary": "Side-view futuristic tank/armor platform with anime mecha influence, clear hardpoints, ground below/sky above read, flat chroma/transparent background, centered explosion cells."
+    },
+    {
+      "id": "armor_vehicle_sheet_alpha_v1",
+      "type": "generated_image",
+      "status": "runtime_asset",
+      "source": "User-provided ChatGPT-generated PNG copied from assets/file_00000000f9f471fb842eaa2e7b6115b8.png on 2026-06-05",
+      "path": "assets/vehicle/armor_vehicle_sheet_alpha.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "target_use": "Runtime sprite sheet for side-view tank hull, weapon attachments, drones, projectiles, and explosions.",
+      "alpha_validation": "RGBA image with transparent corners; green RGB is retained in transparent pixels but alpha is present."
+    },
+    {
+      "id": "armor_vehicle_atlas_v1",
+      "type": "atlas_metadata",
+      "status": "runtime_asset",
+      "source": "Manual coarse atlas created by Codex on 2026-06-05",
+      "path": "assets/vehicle/armor_vehicle_atlas.json",
+      "target_use": "Defines source rectangles and anchors for the generated armor vehicle sheet."
+    },
+    {
+      "id": "armor_command_icon_generated_v1",
+      "type": "generated_image",
+      "status": "page_asset",
+      "source": "Built-in image generation on 2026-06-05; copied from Codex generated_images and resized locally with Pillow",
+      "source_cache_path": "/data/data/com.termux/files/home/.codex/generated_images/019e92cc-6e15-7c03-b374-53b63295c91a/ig_0de711d189ef1302016a22b39bb0e08198bc378d56562a5ede.png",
+      "paths": [
+        "assets/page/armor_command_icon_source.png",
+        "assets/page/armor_command_icon_1024.png",
+        "assets/page/armor_command_icon_512.png",
+        "release/page_assets/armor_command_icon_512.png"
+      ],
+      "dimensions": {
+        "source_crop": [
+          1254,
+          1254
+        ],
+        "icon_1024": [
+          1024,
+          1024
+        ],
+        "icon_512": [
+          512,
+          512
+        ]
+      },
+      "target_use": "Armor Command itch/page icon and release upload asset.",
+      "prompt_summary": "No-text square game icon with a blue-white-gold side-view armor/tank firing an interceptor into a teal night sky."
+    },
+    {
+      "id": "armor_command_page_copy_v1",
+      "type": "release_copy",
+      "status": "page_asset",
+      "source": "Codex-authored copy generated from current Armor Command gameplay and release state on 2026-06-05",
+      "paths": [
+        "docs/armor_command_page_copy.md",
+        "release/page_assets/armor_command_page_copy.md"
+      ],
+      "target_use": "Itch page copy, tag suggestions, controls, feature list, and icon prompt record."
+    },
+    {
+      "id": "armor_command_music_tracks_v1",
+      "type": "music_audio",
+      "status": "runtime_asset",
+      "source": "User-added music assets present in assets/ on 2026-06-05",
+      "paths": [
+        "assets/钢铁苍穹(1).mp3",
+        "assets/钢铁苍穹(2).mp3",
+        "assets/钢铁苍穹(3).mp3",
+        "assets/钢铁苍穹.mp3",
+        "assets/钢铁防线(1).mp3",
+        "assets/钢铁防线(2).mp3",
+        "assets/钢铁防线(3).mp3",
+        "assets/钢铁防线.mp3",
+        "assets/铁幕防御.mp3"
+      ],
+      "target_use": "Randomized looping Armor Command music playlist, started from user interaction, persisted across menu/death/title transitions, and paused on tab/app background.",
+      "certificates": [
+        "assets/钢铁苍穹_Ownership_Certificate (1).pdf",
+        "assets/钢铁苍穹_Ownership_Certificate (2).pdf",
+        "assets/钢铁苍穹_Ownership_Certificate (3).pdf",
+        "assets/钢铁苍穹_Ownership_Certificate.pdf",
+        "assets/钢铁防线_Ownership_Certificate (1).pdf",
+        "assets/钢铁防线_Ownership_Certificate (2).pdf",
+        "assets/钢铁防线_Ownership_Certificate (3).pdf",
+        "assets/钢铁防线_Ownership_Certificate.pdf",
+        "assets/铁幕防御_Ownership_Certificate (1).pdf",
+        "assets/铁幕防御_Ownership_Certificate.pdf"
+      ],
+      "build_note": "MP3 files are packaged into the HTML release zip; ownership certificate PDFs are retained in project assets but excluded from the web build."
+    },
+    {
+      "id": "procedural_keyed_enemy_slay_chime_v1",
+      "type": "procedural_web_audio_sfx",
+      "status": "runtime_asset",
+      "source": "Codex-authored WebAudio oscillator SFX in src/main.js on 2026-06-05",
+      "target_use": "Enemy slain chime that climbs through the current music track key across octaves, with rapid decay and small pitch variation on every playback.",
+      "runtime_path": "src/main.js",
+      "notes": "Track keys are explicit art-direction metadata rather than runtime key detection; update MUSIC_TRACK_KEYS after formal key analysis if needed.",
+      "track_key_groups": {
+        "钢铁苍穹": [
+          "E minor",
+          "G minor variant"
+        ],
+        "钢铁防线": [
+          "D minor",
+          "F minor variant"
+        ],
+        "铁幕防御": [
+          "F-sharp minor"
+        ]
+      }
+    },
+    {
+      "id": "armor_command_sfx_manifest_v1",
+      "type": "sfx_generation_manifest",
+      "status": "implemented_rendered_buffer_with_sfx_toggle",
+      "source": "Codex-authored SFX plan using game-sfx-generation-pipeline on 2026-06-05",
+      "path": "assets/sfx/sfx_manifest.json",
+      "target_use": "Rendered WAV WebAudio-buffer SFX, procedural keyed chime, and future batch-generation manifest for Armor Command.",
+      "runtime_mix": {
+        "music_volume": 0.72,
+        "sfx_master_volume": 0.45,
+        "sfx_output_gain": 0.72
+      }
+    },
+    {
+      "id": "armor_command_rendered_sfx_v1",
+      "type": "rendered_sfx_assets",
+      "status": "runtime_asset",
+      "source": "Hand-authored deterministic Python synthesis in tools/render_sfx_assets.py on 2026-06-05",
+      "paths": [
+        "assets/sfx/base_breach_01.wav",
+        "assets/sfx/base_impact_01.wav",
+        "assets/sfx/base_low_alarm_loop_01.wav",
+        "assets/sfx/drone_bolt_01.wav",
+        "assets/sfx/enemy_pop_01.wav",
+        "assets/sfx/heavy_pistol_01.wav",
+        "assets/sfx/missile_launch_01.wav",
+        "assets/sfx/missile_ready_tick_01.wav",
+        "assets/sfx/player_missile_explosion_01.wav",
+        "assets/sfx/shotgun_burst_01.wav",
+        "assets/sfx/turret_bolt_01.wav",
+        "assets/sfx/ui_back_to_itch_01.wav",
+        "assets/sfx/ui_pause_01.wav",
+        "assets/sfx/ui_select_01.wav",
+        "assets/sfx/upgrade_select_01.wav",
+        "assets/sfx/wave_clear_01.wav",
+        "assets/sfx/wave_start_01.wav",
+        "assets/sfx/drop_pod_break_01.wav",
+        "assets/sfx/trooper_rocket_launch_01.wav",
+        "assets/sfx/trooper_shatter_01.wav",
+        "assets/sfx/enemy_rocket_pop_01.wav"
+      ],
+      "target_use": "Higher-impact bullets, rockets, impacts, UI, wave, and alarm one-shots loaded as WebAudio buffers.",
+      "runtime_path": "src/main.js",
+      "notes": "Generated without external libraries or ffmpeg; mono 44.1 kHz WAV files with layered transient/body/noise/tail synthesis. v1.0.0 keeps source SFX master 0.45 plus post-compressor output gain 0.72 and a persistent SFX toggle."
+    },
+    {
+      "id": "armor_command_battlefield_background_v1",
+      "type": "generated_image",
+      "status": "runtime_asset",
+      "source": "Built-in image generation on 2026-06-05; copied from Codex generated_images into project assets.",
+      "source_cache_path": "/data/data/com.termux/files/home/.codex/generated_images/019e92cc-6e15-7c03-b374-53b63295c91a/ig_025750ea8614a749016a22cf6365fc8198bcb4350c4cc62b0a.png",
+      "path": "assets/backgrounds/armor_command_battlefield_bg_v1.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "target_use": "Primary canvas background drawn with cover-crop scaling behind gameplay overlays.",
+      "prompt_summary": "Mobile-first anime mecha missile-command battlefield background with open teal sky, distant city/radar glow, and fortified ground line."
+    },
+    {
+      "id": "drop_pod_enemy_sprite_sheet_v1",
+      "type": "generated_image_postprocessed",
+      "status": "runtime_asset",
+      "source": "Built-in image generation on 2026-06-05 with chroma-key removal via imagegen/remove_chroma_key.py.",
+      "source_cache_path": "/data/data/com.termux/files/home/.codex/generated_images/019e92cc-6e15-7c03-b374-53b63295c91a/ig_025750ea8614a749016a22d180413481988741fcf2482fbe38.png",
+      "paths": [
+        "assets/enemies/drop_pod_enemy_sheet_chromakey_v1.png",
+        "assets/enemies/drop_pod_enemy_sheet_alpha_v1.png",
+        "assets/enemies/drop_pod_enemy_atlas_v1.json"
+      ],
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "target_use": "Runtime art for drop pod, cracked pod, robot paratrooper, small enemy rocket, and shatter debris fragments.",
+      "alpha_validation": "RGBA image with transparent corners after chroma-key removal; atlas regions are manually cropped in drop_pod_enemy_atlas_v1.json.",
+      "prompt_summary": "Anime mecha arcade sprite sheet on flat #00ff00: intact/cracked drop pod, parachute robot, falling robot, rocket, and metal fragments."
+    },
+    {
+      "id": "armor_command_drop_pod_enemy_runtime_v1",
+      "type": "runtime_gameplay_feature",
+      "status": "runtime_asset",
+      "source": "src/main.js edits on 2026-06-05",
+      "target_use": "Adds drop pod spawns, robot paratrooper descent, small destructible rockets, shatter debris, and kill-chain scoring multiplier.",
+      "runtime_path": "src/main.js",
+      "notes": "Drop pods have double the previous HP and more HP than troopers; destroyed pods spawn troopers. Troopers also have double the previous HP, descend slowly, fire rockets, and shatter into falling pieces on death. Base hits reset the combo."
+    },
+    {
+      "id": "termux_butler_source_build_notes_v1",
+      "type": "release_tooling_note",
+      "status": "documented",
+      "source": "Observed local Termux environment on 2026-06-05",
+      "target_use": "Preserve itch butler deployment knowledge for Android/Termux sessions.",
+      "notes": [
+        "Official Linux ARM64 butler binary can fail under Termux/Android because it targets the GNU/Linux loader, not Android linker.",
+        "Go is installed at /data/data/com.termux/files/usr/bin/go and reports go1.26.4 android/arm64.",
+        "Local butler binary is /data/data/com.termux/files/usr/tmp/butler-android-bin/butler, built from official itchio/butler source under /data/data/com.termux/files/usr/tmp/butler-src-1780609690.",
+        "The local binary reports head, no build date; push/status work despite the harmless android-arm64-head/LATEST 404 self-version check."
+      ]
+    },
+    {
+      "id": "armor_command_v1_audio_controls_v1",
+      "type": "runtime_ui_feature",
+      "status": "runtime_asset",
+      "source": "src/main.js and index.html edits on 2026-06-05",
+      "target_use": "1.0 audio controls: persistent SFX mute toggle in title/pause menus and no music button on the in-game HUD.",
+      "runtime_paths": [
+        "src/main.js",
+        "index.html"
+      ],
+      "local_storage_keys": [
+        "armor-command.music-disabled.v1",
+        "armor-command.sfx-disabled.v1"
+      ],
+      "notes": "SFX disable mutes the WebAudio output bus and suppresses new SFX calls; music control remains available from title and pause menus."
+    },
+    {
+      "id": "armor_command_content_drop_2_missile_traits_v1",
+      "type": "runtime_gameplay_feature",
+      "status": "runtime_asset",
+      "source": "src/main.js edits on 2026-06-06",
+      "target_use": "Additive missile trait behavior for radioactive, splitter, and piercer payloads.",
+      "runtime_path": "src/main.js",
+      "notes": "Piercer Warheads create an explosion at the target point, then continue the missile along its trajectory for one pierce per upgrade up to four. Splitter Payloads schedule child explosions ahead along the missile trajectory with short chain-reaction delays."
+    },
+    {
+      "id": "armor_command_drone_flamethrower_branch_v1",
+      "type": "runtime_canvas_effect",
+      "status": "runtime_asset",
+      "source": "Adapted from Cornfire Convoy canvas flamethrower behavior/effect on 2026-06-06; no external bitmap copied.",
+      "source_refs": [
+        "/storage/emulated/0/Documents/GodotProjects/cornfire-convoy/src/main.js lines 454-464",
+        "/storage/emulated/0/Documents/GodotProjects/cornfire-convoy/src/main.js lines 1005-1021"
+      ],
+      "target_use": "Additive drone flamethrower branch with close-range cone damage and curved canvas flame ribbon renderer.",
+      "runtime_path": "src/main.js"
+    },
+    {
+      "id": "armor_command_procedural_base_and_effect_art_v1",
+      "type": "procedural_canvas_art",
+      "status": "runtime_asset",
+      "source": "Codex-authored src/main.js renderer edits on 2026-06-06",
+      "target_use": "Readable defended base, radioactive cloud sprite, explosion overlays, shock spokes, and gameplay effect feedback.",
+      "runtime_path": "src/main.js",
+      "notes": "Base art uses a fortified bunker line, shield pylons, radar dome, integrity cells, and damage cracks. Explosions combine sprite-sheet frames where available with procedural glow, core flash, shock ring, and radial spokes."
+    },
+    {
+      "id": "armor_command_effects_sprite_sheet_v1",
+      "type": "generated_image_postprocessed",
+      "status": "runtime_asset",
+      "source": "Built-in image generation on 2026-06-06 with magenta chroma-key removal via imagegen/remove_chroma_key.py.",
+      "source_cache_path": "/data/data/com.termux/files/home/.codex/generated_images/019e9a3e-a1d6-7671-9538-d6a4a60f7818/ig_03d97b27a3a58c9d016a23846784c88195b3eb51b11198a052.png",
+      "paths": [
+        "assets/effects/armor_command_effects_sheet_chromakey_v1.png",
+        "assets/effects/armor_command_effects_sheet_alpha_v1.png",
+        "assets/effects/armor_command_effects_atlas_v1.json"
+      ],
+      "dimensions": [
+        1774,
+        887
+      ],
+      "target_use": "Runtime explosion animation frames and radioactive cloud sprite frames for Armor Command.",
+      "alpha_validation": "RGBA alpha PNG with transparent corners after #fb03fa border key removal; alpha extrema 0..255.",
+      "prompt_summary": "6x2 anime arcade VFX sprite sheet: top row explosion frames, bottom row radioactive cloud frames, flat magenta key background, no text.",
+      "atlas_revision": "v1.3 removed radioactive frame 2 right-edge neighbor leak and restored frame 3 main cloud crop.",
+      "runtime_version": "v1.1.9-2026-06-06"
     }
   ]
 }

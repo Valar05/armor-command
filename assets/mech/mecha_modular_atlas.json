@@ -11,12 +11,13 @@
         72,
         58,
         394,
-        604
+        352
       ],
       "anchor": [
         197,
-        514
-      ]
+        342
+      ],
+      "notes": "Runtime uses the upper torso/hip sprite only; the separated perspective legs in the source sheet are intentionally excluded."
     },
     "arm_rifle": {
       "rect": [
@@ -125,7 +126,8 @@
       "anchor": [
         74,
         77
-      ]
+      ],
+      "draw_mode": "fixed_center_square"
     },
     "explosion_1": {
       "rect": [
@@ -137,7 +139,8 @@
       "anchor": [
         92,
         95
-      ]
+      ],
+      "draw_mode": "fixed_center_square"
     },
     "explosion_2": {
       "rect": [
@@ -149,7 +152,8 @@
       "anchor": [
         119,
         111
-      ]
+      ],
+      "draw_mode": "fixed_center_square"
     },
     "explosion_3": {
       "rect": [
@@ -161,7 +165,8 @@
       "anchor": [
         119,
         92
-      ]
+      ],
+      "draw_mode": "fixed_center_square"
     },
     "explosion_4": {
       "rect": [
@@ -173,7 +178,8 @@
       "anchor": [
         118,
         80
-      ]
+      ],
+      "draw_mode": "fixed_center_square"
     },
     "explosion_5": {
       "rect": [
@@ -185,7 +191,9 @@
       "anchor": [
         77,
         56
-      ]
+      ],
+      "draw_mode": "fixed_center_square"
     }
-  }
+  },
+  "notes": "Explosion frames are drawn into a fixed centered destination square at runtime to prevent visual jitter from uneven generated-frame bounds."
 }
