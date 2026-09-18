@@ -168,7 +168,8 @@
         "assets/铁幕防御_Ownership_Certificate (1).pdf",
         "assets/铁幕防御_Ownership_Certificate.pdf"
       ],
-      "build_note": "MP3 files are packaged into the HTML release zip; ownership certificate PDFs are retained in project assets but excluded from the web build."
+      "build_note": "MP3 files are packaged into the HTML release zip; ownership certificate PDFs are retained in project assets but excluded from the web build.",
+      "distribution_processing": "2026-09-18: all nine certificate-backed runtime tracks transcoded in place from 256 kbps MP3 to 96 kbps CBR MP3 with ffmpeg/libmp3lame for CrazyGames package-budget compliance. Track duration was checked within 0.15 seconds before replacement; certificates and target use remain unchanged."
     },
     {
       "id": "procedural_keyed_enemy_slay_chime_v1",
